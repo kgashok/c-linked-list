@@ -4,7 +4,6 @@
 
 
 int main(void){
-  // List * list = makelist();
   List * list = 0;
   list = add(1, list);
   add(20, list);
@@ -13,6 +12,7 @@ int main(void){
   add(8, list);
   add(9, list);
   add(13, list);
+  puts("Linked List built successfully!");
   ldisplay(list);
 
   printf("Deleting 2...");
@@ -35,14 +35,12 @@ int main(void){
   list = ldelete(13, list);
   ldisplay(list);
 
-
   list = lreverse(list);
   printf("reversed: \n");
   ldisplay(list);
   list = lreverse(list);
   printf("reversed again: \n");
   ldisplay(list);
-
 
   ldestroy(list);
   puts("Entire list destroyed successfully!");
