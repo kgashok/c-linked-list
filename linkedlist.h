@@ -6,6 +6,7 @@ typedef struct node Node;
 typedef struct list List;
 
 List * makelist();
+Node * createnode(int data);
 void add(int data, List * list);
 void ldelete(int data, List * list);
 void ldisplay(List * list);

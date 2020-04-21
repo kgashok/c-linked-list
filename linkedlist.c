@@ -11,18 +11,6 @@ struct list {
   Node * head; 
 };
 
-Node * createnode(int data);
-
-Node * createnode(int data){
-  Node * newNode = malloc(sizeof(Node));
-  if (!newNode) {
-    return NULL;
-  }
-  newNode->data = data;
-  newNode->next = NULL;
-  return newNode;
-}
-
 List * makelist(){
   List * list = malloc(sizeof(List));
   if (!list) {
@@ -32,14 +20,14 @@ List * makelist(){
   return list;
 }
 
-void ldisplay(List * list) {
-  Node * current = list->head;
-  if(list->head == NULL) 
-    return;
-  
-  for(; current != NULL; current = current->next) {
-    printf("%d\n", current->data);
+Node * createnode(int data){
+  Node * newNode = malloc(sizeof(Node));
+  if (!newNode) {
+    return NULL;
   }
+  newNode->data = data;
+  newNode->next = NULL;
+  return newNode;
 }
 
 void add(int data, List * list){
@@ -53,6 +41,16 @@ void add(int data, List * list){
       current = current->next;
     }
     current->next = createnode(data);
+  }
+}
+
+void ldisplay(List * list) {
+  Node * current = list->head;
+  if(list->head == NULL) 
+    return;
+  
+  for(; current != NULL; current = current->next) {
+    printf("%d\n", current->data);
   }
 }
 
@@ -72,6 +70,17 @@ void ldelete(int data, List * list){
   }                                 
 }                                   
 
+void ldestroy(List * list){
+  Node * current = list->head;
+  Node * next = current;
+  while(current != NULL){
+    next = current->next;
+    free(current);
+    current = next;
+  }
+  free(list);
+}
+
 void lreverse(List* list){
   Node * reversed = NULL;
   Node * current = list->head;
@@ -83,15 +92,4 @@ void lreverse(List* list){
     reversed = temp;
   }
   list->head = reversed;
-}
-
-void ldestroy(List * list){
-  Node * current = list->head;
-  Node * next = current;
-  while(current != NULL){
-    next = current->next;
-    free(current);
-    current = next;
-  }
-  free(list);
 }
