@@ -4,15 +4,15 @@
 
 struct node {
   int data;
-  struct node * next;
+  struct node *next;
 };
 
 struct list {
-  Node * head; 
+  Node *head;
 };
 
-List * makelist(){
-  List * list = malloc(sizeof(List));
+List *makelist() {
+  List *list = malloc(sizeof(List));
   if (!list) {
     return NULL;
   }
@@ -20,8 +20,8 @@ List * makelist(){
   return list;
 }
 
-Node * createnode(int data){
-  Node * newNode = malloc(sizeof(Node));
+Node *createnode(int data) {
+  Node *newNode = malloc(sizeof(Node));
   if (!newNode) {
     return NULL;
   }
@@ -30,40 +30,39 @@ Node * createnode(int data){
   return newNode;
 }
 
-void add(int data, List * list){
-  Node * current = NULL;
-  if(list->head == NULL){
+void add(int data, List *list) {
+  Node *current = NULL;
+  if (list->head == NULL) {
     list->head = createnode(data);
-  }
-  else {
-    current = list->head; 
-    while (current->next!=NULL){
+  } else {
+    current = list->head;
+    while (current->next != NULL) {
       current = current->next;
     }
     current->next = createnode(data);
   }
 }
 
-void ldisplay(List * list) {
-  Node * current = list->head;
-  if(list->head == NULL) {
+void ldisplay(List *list) {
+  Node *current = list->head;
+  if (list->head == NULL) {
     puts("Nothing to display!");
     return;
   }
-  
+
   printf("List contents [");
-  for(; current != NULL; current = current->next) {
+  for (; current != NULL; current = current->next) {
     printf("%d", current->data);
     if (current->next)
-        printf(", ");
+      printf(", ");
   }
   puts("]");
 }
 
-void ldestroy(List * list){
-  Node * current = list->head;
-  Node * next = current;
-  while(current != NULL){
+void ldestroy(List *list) {
+  Node *current = list->head;
+  Node *next = current;
+  while (current != NULL) {
     next = current->next;
     free(current);
     current = next;
@@ -71,26 +70,26 @@ void ldestroy(List * list){
   free(list);
 }
 
-void ldelete(int data, List * list){
-  Node * current = list->head;            
-  Node * previous = current;           
-  while(current != NULL){           
-    if(current->data == data){      
+void ldelete(int data, List *list) {
+  Node *current = list->head;
+  Node *previous = current;
+  while (current != NULL) {
+    if (current->data == data) {
       previous->next = current->next;
-      if(current == list->head)
+      if (current == list->head)
         list->head = current->next;
       free(current);
       return;
-    }                               
-    previous = current;             
-    current = current->next;        
-  }                                 
-}                                   
+    }
+    previous = current;
+    current = current->next;
+  }
+}
 
-void lreverse(List* list){
-  Node * current = list->head;
-  Node * prev = NULL;
-  while(current){
+void lreverse(List *list) {
+  Node *current = list->head;
+  Node *prev = NULL;
+  while (current) {
     Node *nextnode = current->next;
     current->next = prev;
     prev = current;
