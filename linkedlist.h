@@ -15,7 +15,7 @@ struct list {
 typedef struct list List;
 
 
-List *makelist();
+List *init_list();
 Node *createnode(int data);
 void add(int data, List *list);
 void ldelete(int data, List *list);

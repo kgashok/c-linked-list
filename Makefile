@@ -11,7 +11,7 @@ list: list.o main.c
 list.o: list.h 
 
 llist: linkedlist.o main.c
-	$(CC) $(CFLAGS) list.o main.c -o $(EXECUTABLE2)
+	$(CC) $(CFLAGS) linkedlist.o main1.c -o $(EXECUTABLE2)
 linkedlist.o: linkedlist.h 
 
 clean:

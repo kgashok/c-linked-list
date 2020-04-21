@@ -8,19 +8,21 @@ struct node {
 
 typedef struct node Node;
 
+/*
 struct list {
   Node *head;
 };
+*/
 
-typedef struct list List;
+typedef struct node List;
 
-
-List *makelist();
+//List *makelist();
+List *init_list();
 Node *createnode(int data);
-void add(int data, List *list);
-void ldelete(int data, List *list);
+Node *add(int data, List *list);
+Node *ldelete(int data, List *list);
 void ldisplay(List *list);
-void lreverse(List *list);
 void ldestroy(List *list);
+Node *lreverse(List *list);
 
 #endif

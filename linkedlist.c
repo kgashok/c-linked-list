@@ -2,36 +2,30 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 
-List *makelist() {
+List *init_list() {
   List *list = malloc(sizeof(List));
-  if (!list) {
-    return NULL;
-  }
   list->head = NULL;
   return list;
 }
 
 Node *createnode(int data) {
   Node *newNode = malloc(sizeof(Node));
-  if (!newNode) {
-    return NULL;
-  }
   newNode->data = data;
   newNode->next = NULL;
   return newNode;
 }
 
 void add(int data, List *list) {
-  Node *current = NULL;
+  Node *newnode = createnode(data);
   if (list->head == NULL) {
-    list->head = createnode(data);
-  } else {
-    current = list->head;
-    while (current->next != NULL) {
-      current = current->next;
-    }
-    current->next = createnode(data);
+    list->head = newnode;
+    return;
   }
+  
+  Node *current = list->head;
+  while (current->next)
+    current = current->next;
+  current->next = createnode(data);
 }
 
 void ldisplay(List *list) {

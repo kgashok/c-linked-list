@@ -1,84 +1,79 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "linkedlist.h"
+#include "list.h"
 
-List *makelist() {
-  List *list = malloc(sizeof(List));
-  if (!list) {
-    return NULL;
-  }
-  list->head = NULL;
-  return list;
+List *init_list() {
+  return NULL;
 }
 
 Node *createnode(int data) {
   Node *newNode = malloc(sizeof(Node));
-  if (!newNode) {
-    return NULL;
-  }
   newNode->data = data;
   newNode->next = NULL;
   return newNode;
 }
 
-void add(int data, List *list) {
-  Node *current = NULL;
-  if (list->head == NULL) {
-    list->head = createnode(data);
-  } else {
-    current = list->head;
-    while (current->next != NULL) {
-      current = current->next;
-    }
-    current->next = createnode(data);
-  }
+Node *add(int data, List *list) {
+  Node *newnode = createnode(data);
+  // is this the first node?
+  if (!list) 
+    return newnode;
+  
+  // traverse to the tail
+  while (list->next)
+      list = list->next;
+
+  list->next = newnode;
+  return newnode;
 }
 
 void ldisplay(List *list) {
-  Node *current = list->head;
-  if (list->head == NULL) {
-    puts("Nothing to display!");
-    return;
-  }
-
+  Node *current = list; 
   printf("List contents [");
-  for (; current != NULL; current = current->next) {
+  while(current) {
     printf("%d", current->data);
     if (current->next)
       printf(", ");
+    current = current->next;
   }
   puts("]");
 }
 
-void ldestroy(List *list) {
-  Node *current = list->head;
-  Node *next = current;
-  while (current != NULL) {
-    next = current->next;
-    free(current);
-    current = next;
-  }
-  free(list);
-}
-
-void ldelete(int data, List *list) {
-  Node *current = list->head;
-  Node *previous = current;
-  while (current != NULL) {
+Node *ldelete(int data, List *list) {
+  Node *current = list; 
+  Node *previous = 0;
+  while (current) {
+    // is there a match? 
     if (current->data == data) {
-      previous->next = current->next;
-      if (current == list->head)
-        list->head = current->next;
+      if(previous)
+        previous->next = current->next; 
+      else  // match at the head node
+        list = current->next; 
+
       free(current);
-      return;
-    }
+      return list;
+    }  
+    // else go check the nextnode 
     previous = current;
     current = current->next;
   }
+  printf("%d: No match for data in list!\n", data);
+  return list;
 }
 
-void lreverse(List *list) {
-  Node *current = list->head;
+void ldestroy(List *list) {
+  Node *current = list;
+  if(!current) 
+    return;
+  while (current->next) {
+    Node *next = current->next;
+    free(current);
+    current = next;
+  }
+}
+
+Node *lreverse(List *list) {
+  Node *current = list;
   Node *prev = NULL;
   while (current) {
     Node *nextnode = current->next;
@@ -86,5 +81,5 @@ void lreverse(List *list) {
     prev = current;
     current = nextnode;
   }
-  list->head = prev;
+  return prev;
 }
