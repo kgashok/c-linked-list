@@ -12,15 +12,23 @@ int main(void){
   add(9, list);
   add(13, list);
   ldisplay(list);
+
+  printf("Deleting 2...");
   ldelete(2, list);
   ldisplay(list);
+
+  printf("Deleting 1...");
   ldelete(1, list);
   ldisplay(list);
+
+  printf("Deleting 20...");
   ldelete(20, list);
   ldisplay(list);
+
   lreverse(list);
-  printf("reversed: ");
+  printf("reversed: \n");
   ldisplay(list);
+
   ldestroy(list);
   return 0;
 }

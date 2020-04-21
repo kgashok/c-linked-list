@@ -46,12 +46,29 @@ void add(int data, List * list){
 
 void ldisplay(List * list) {
   Node * current = list->head;
-  if(list->head == NULL) 
+  if(list->head == NULL) {
+    puts("Nothing to display!");
     return;
-  
-  for(; current != NULL; current = current->next) {
-    printf("%d\n", current->data);
   }
+  
+  printf("List contents [");
+  for(; current != NULL; current = current->next) {
+    printf("%d", current->data);
+    if (current->next)
+        printf(", ");
+  }
+  puts("]");
+}
+
+void ldestroy(List * list){
+  Node * current = list->head;
+  Node * next = current;
+  while(current != NULL){
+    next = current->next;
+    free(current);
+    current = next;
+  }
+  free(list);
 }
 
 void ldelete(int data, List * list){
@@ -70,26 +87,14 @@ void ldelete(int data, List * list){
   }                                 
 }                                   
 
-void ldestroy(List * list){
-  Node * current = list->head;
-  Node * next = current;
-  while(current != NULL){
-    next = current->next;
-    free(current);
-    current = next;
-  }
-  free(list);
-}
-
 void lreverse(List* list){
-  Node * reversed = NULL;
   Node * current = list->head;
-  Node * temp = NULL;
-  while(current != NULL){
-    temp = current;
-    current = current->next;
-    temp->next = reversed;
-    reversed = temp;
+  Node * prev = NULL;
+  while(current){
+    Node *nextnode = current->next;
+    current->next = prev;
+    prev = current;
+    current = nextnode;
   }
-  list->head = reversed;
+  list->head = prev;
 }
