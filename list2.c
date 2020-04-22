@@ -16,8 +16,9 @@ int is_valid(Node *n) { return n != NULL; }
  * Arguments: Starting node pointer and number of steps
  */
 Node *traverse(Node *np, int steps) {
-  for (; is_valid(np) && steps > 0; np = np->next, steps--)
-    ;
+  while (is_valid(np) && steps > 0)
+    np = np->next, steps--; 
+  
   return steps == 0 ? np : NULL;
 }
 
