@@ -11,17 +11,27 @@ Node *lhead = NULL;
 
 int is_valid(Node *n) { return n != NULL; }
 
+/* Traverses a list and returns a node 'steps' away 
+ * or returns NULL if 'steps' is not valid
+ * Arguments: Starting node pointer and number of steps
+ */
 Node *traverse(Node *np, int steps) {
   for (; is_valid(np) && steps > 0; np = np->next, steps--)
     ;
   return steps == 0 ? np : NULL;
 }
 
+/* Connects up two valid nodes 
+ * Arguments: Two nodes, the 2nd node follows the 1st node
+ */
 void connect(Node *current, Node *following) {
   if (is_valid(current))
     current->next = following;
 }
 
+/* Gets an integer value from stdin 
+ * Arguments: None
+ */
 int get_value() {
   int val;
   printf("\n Enter the data : ");
@@ -30,6 +40,10 @@ int get_value() {
   return val;
 }
 
+/* Gets an integer value from stdin 
+ * and returns that value as index (value-1)
+ * Arguments: None
+ */
 int get_position() {
   int pos;
   printf("\n Enter the position: ");
