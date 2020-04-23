@@ -54,7 +54,7 @@ int get_position() {
   return pos;
 }
 
-Node *getNode() {
+Node *get_node() {
   int pos = get_position();
   return traverse(lhead, pos);
 }
@@ -74,7 +74,7 @@ void insert_after(Node *locatedNode, int val) {
 }
 
 void insert() {
-  Node *locatedNode = getNode();
+  Node *locatedNode = get_node();
   if (is_valid(locatedNode)) {
     int val = get_value();
     insert_after(locatedNode, val);
@@ -82,6 +82,29 @@ void insert() {
   }
   printf("\n No such position");
 }
+
+void get_index() { 
+  int val;
+  printf("\nEnter value to search for? ");
+  scanf("%d", &val);
+  int index = 0;
+  int flag = 0;
+  const Node* current = lhead;
+  while (current) { 
+    if (current->data == val) {
+      flag = 1;
+      break;
+    }
+    index++;
+    current = current->next;
+  }
+  if (!flag)
+    printf("Data %d: Not in the list!\n", val); 
+  else {
+    printf("Data %d: Found at index %d", val, index);
+  }
+}
+
 
 //------- DO NOT EDIT BELOW ---------------
 void create();
@@ -94,7 +117,9 @@ int main() {
   for (i = 1; i <= n; i++)
     create();
   printf("\n1.Insert"
-         "\n3.Display\n6.Exit");
+         "\n3.Display"
+         "\n4.Search"
+         "\n6.Exit");
   do {
     printf("\n Enter your choice: ");
     scanf("%d", &choice);
@@ -106,12 +131,15 @@ int main() {
     case 3:
       ndisplay();
       break;
+    case 4:
+      get_index();
     case 6:
       break;
     }
   } while (choice != 6);
   return 0;
 }
+
 Node *ltail;
 void create() {
   int val = get_value();
