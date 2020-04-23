@@ -60,19 +60,14 @@ Node *get_node() {
 }
 
 Node *init_node(int val) {
-  Node *np = (Node *)malloc(sizeof(Node));
-  np->data = val;
-  np->next = NULL;
-  return np;
 }
 
 void insert_after(Node *locatedNode, int val) {
-  Node *next = locatedNode->next;
-  Node *newN = init_node(val);
-  connect(locatedNode, newN);
-  connect(newN, next);
 }
 
+/* DO NOT MODIFY the function below 
+ *
+ */
 void insert() {
   Node *locatedNode = get_node();
   if (is_valid(locatedNode)) {
@@ -83,26 +78,12 @@ void insert() {
   printf("\n No such position");
 }
 
+/* Gets an integer value from stdin 
+ * and return the location (index) of that 
+ * value in the linked list 
+ * Arguments: None
+ */
 void get_index() { 
-  int val;
-  printf("\nEnter value to search for? ");
-  scanf("%d", &val);
-  int index = 0;
-  int flag = 0;
-  const Node* current = lhead;
-  while (current) { 
-    if (current->data == val) {
-      flag = 1;
-      break;
-    }
-    index++;
-    current = current->next;
-  }
-  if (!flag)
-    printf("Data %d: Not in the list!\n", val); 
-  else {
-    printf("Data %d: Found at index %d", val, index);
-  }
 }
 
 
@@ -152,6 +133,7 @@ void create() {
     ltail = new;
   }
 }
+
 void ndisplay() {
   Node *iter = lhead;
   if (!is_valid(iter))
