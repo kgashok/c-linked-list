@@ -60,9 +60,17 @@ Node *get_node() {
 }
 
 Node *init_node(int val) {
+  Node *np = (Node *)malloc(sizeof(Node));
+  np->data = val;
+  np->next = NULL;
+  return np;
 }
 
 void insert_after(Node *locatedNode, int val) {
+  Node *next = locatedNode->next;
+  Node *newN = init_node(val);
+  connect(locatedNode, newN);
+  connect(newN, next);
 }
 
 /* DO NOT MODIFY the function below 
@@ -84,6 +92,25 @@ void insert() {
  * Arguments: None
  */
 void get_index() { 
+  int val;
+  printf("\nEnter value to search for? ");
+  scanf("%d", &val);
+  int index = 0;
+  int flag = 0;
+  const Node* current = lhead;
+  while (current) { 
+    if (current->data == val) {
+      flag = 1;
+      break;
+    }
+    index++;
+    current = current->next;
+  }
+  if (!flag)
+    printf("Data %d: Not in the list!", val); 
+  else {
+    printf("Data %d: Found at index %d", val, index);
+  }
 }
 
 
@@ -136,11 +163,10 @@ void create() {
 
 void ndisplay() {
   Node *iter = lhead;
-  if (!is_valid(iter))
-    printf("\nThe List is empty");
-  else {
-    printf("\n  The list contains : ");
-    for (; is_valid(iter); iter = iter->next)
-      printf("\t %d", iter->data);
+  printf("\n  The list contains : [");
+  for (; is_valid(iter); iter = iter->next) {
+    printf("%d", iter->data);
+    if (iter->next) printf(", ");
   }
+  printf("]");
 }
