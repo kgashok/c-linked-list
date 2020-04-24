@@ -8,6 +8,11 @@ typedef struct node {
 } Node;
 
 Node *lhead = NULL;
+Node *ltail;
+
+void create();
+void ndisplay();
+void sort_list();
 
 int is_valid(Node *n) { return n != NULL; }
 
@@ -113,10 +118,7 @@ void get_index() {
   }
 }
 
-
 //------- DO NOT EDIT BELOW ---------------
-void create();
-void ndisplay();
 int main() {
   int choice, n;
   printf("\n Enter the initial no. of inputs:");
@@ -124,10 +126,11 @@ int main() {
   int i;
   for (i = 1; i <= n; i++)
     create();
-  printf("\n1.Insert"
-         "\n3.Display"
-         "\n4.Search"
-         "\n6.Exit");
+  printf("\n1. Insert"
+         "\n3. Display"
+         "\n4. Search"
+         "\n5. Sort"
+         "\n6. Exit");
   do {
     printf("\n Enter your choice: ");
     scanf("%d", &choice);
@@ -141,6 +144,10 @@ int main() {
       break;
     case 4:
       get_index();
+      break;
+    case 5: 
+      sort_list(); 
+      break;
     case 6:
       break;
     }
@@ -148,7 +155,6 @@ int main() {
   return 0;
 }
 
-Node *ltail;
 void create() {
   int val = get_value();
   Node *new = init_node(val);
@@ -169,4 +175,39 @@ void ndisplay() {
     if (iter->next) printf(", ");
   }
   printf("]");
+}
+
+int comparefunc (const void *a, const void *b) { 
+    const Node *na = *(Node **)a;
+    const Node *nb = *(Node **)b;
+    return na->data - nb->data;
+    //return -1;
+}
+
+void sort_list() { 
+    Node *current = lhead;
+    Node *narr[100];
+    int count = 0; 
+    while (current) { 
+        narr[count] = current;
+        current = current->next;
+        count++;
+    }
+    if (count > 0) {
+        qsort(&narr, count, sizeof(Node *), comparefunc);
+        lhead = narr[0];
+        Node *current = lhead;
+        Node *prev = 0;
+        int i = 0;
+        while (count--) {
+            current->next = narr[i+1];
+            prev = current;
+            current = current->next;
+            i++;
+        }
+        prev->next = 0;
+        ltail = prev;
+    }
+    printf("List sorted: ");
+    ndisplay();
 }
