@@ -13,6 +13,8 @@ Node *ltail;
 void create();
 void ndisplay();
 void sort_list();
+void ssort_list();
+void snsort_list();
 
 int is_valid(Node *n) { return n != NULL; }
 
@@ -146,7 +148,9 @@ int main() {
       get_index();
       break;
     case 5: 
-      sort_list(); 
+      snsort_list();
+      //ssort_list(); 
+      //sort_list(); 
       break;
     case 6:
       break;
@@ -183,6 +187,78 @@ int comparefunc (const void *a, const void *b) {
     return na->data - nb->data;
     //return -1;
 }
+
+/* Select sort the given 
+ * linked list 
+ */
+void snsort_list() { 
+    Node *current = lhead;
+    Node *prev = 0;
+    // iterate through the list 
+    while (current && current->next) {
+        Node *mnode = current;
+        // find the minimum in the rest of the list
+        Node *rest = current->next;
+        Node *mprev = 0;
+        Node *restp = current;
+        while (rest) {
+            if (rest->data < mnode->data) {
+                mnode = rest;
+                mprev = restp;
+            }
+            restp = rest;
+            rest = rest->next;        
+        }
+        // swap only if necessary
+        if (mnode != current) {
+            // mprev->next was pointing at mnode, now ->> current
+            Node *temp1 = current;
+            temp1->next = mnode->next;
+
+            if (mprev) { 
+                mprev->next = temp1;
+                mprev->next->next = temp1->next; 
+            }
+
+            // prev->next was pointing at current, now ->> mnode
+            Node *temp2 = mnode; 
+            temp2->next = current->next; 
+            
+            if (prev) {
+                prev->next = temp2;
+                prev->next->next = temp2->next;
+            } 
+            current = current->next;            
+        }
+        else {
+            prev = current;
+            current = current->next;
+        }
+    }
+}
+
+void ssort_list() { 
+    Node *current = lhead;
+    // iterate through the list 
+    while (current && current->next) {
+        Node *mnode = current;
+        // find the minimum in the rest of the list
+        Node *rest = current->next;
+        while (rest) {
+            if (rest->data < mnode->data) 
+                mnode = rest;
+            rest = rest->next;        
+        }
+        // swap only if necessary
+        if (mnode != current) {
+            int temp = mnode->data;
+            mnode->data = current->data; 
+            current->data = temp;
+        }
+        current = current->next;
+    }
+}
+
 
 void sort_list() { 
     Node *current = lhead;
