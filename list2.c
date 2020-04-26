@@ -12,9 +12,9 @@ Node *ltail;
 
 void create();
 void ndisplay();
-void sort_list();
-void ssort_list();
-void snsort_list();
+void sort_list();    // sorting using qsort 
+void ssort_list();   // sorting using selection sort of values
+void snsort_list();  // sorting using selection sort of nodes
 
 int is_valid(Node *n) { return n != NULL; }
 
@@ -188,8 +188,8 @@ int comparefunc (const void *a, const void *b) {
     //return -1;
 }
 
-/* Select sort the given 
- * linked list 
+/* Selection sort of the nodes 
+ * in the linked list 
  */
 void snsort_list() { 
     Node *current = lhead;
@@ -228,7 +228,7 @@ void snsort_list() {
                 temp = mprev->next; 
                 mprev->next = prev->next; 
                 prev->next = temp;
-                                
+
                 /*printf("\nc-%d cn-%d m-%d mn-%d\n", 
                         current->data, current->next->data,
                         mnode->data, mnode->next->data);
@@ -244,6 +244,9 @@ void snsort_list() {
     ndisplay();
 }
 
+/* Selection sort of the linked list 
+ * based on the node values
+ */
 void ssort_list() { 
     Node *current = lhead;
     // iterate through the list 
@@ -266,7 +269,9 @@ void ssort_list() {
     }
 }
 
-
+/* Selection sort of the linked list 
+ * based on the node values
+ */
 void sort_list() { 
     Node *current = lhead;
     Node *narr[100];
