@@ -211,30 +211,37 @@ void snsort_list() {
         }
         // swap only if necessary
         if (mnode != current) {
-            // mprev->next was pointing at mnode, now ->> current
-            Node *temp1 = current;
-            temp1->next = mnode->next;
-
-            if (mprev) { 
-                mprev->next = temp1;
-                mprev->next->next = temp1->next; 
+            Node *temp;
+            // if nodes are adjacent to each other
+            if (mprev == current) {
+                temp = mnode->next; 
+                mnode->next = current;
+                current->next = temp;
+                // previous now points to mnode
+                prev->next = mnode;
+            } else {
+                // first swap
+                temp = mnode->next; 
+                mnode->next = current->next;
+                current->next = temp;
+                // second swap 
+                temp = mprev->next; 
+                mprev->next = prev->next; 
+                prev->next = temp;
+                                
+                /*printf("\nc-%d cn-%d m-%d mn-%d\n", 
+                        current->data, current->next->data,
+                        mnode->data, mnode->next->data);
+                        */
+                current = mnode;
             }
-
-            // prev->next was pointing at current, now ->> mnode
-            Node *temp2 = mnode; 
-            temp2->next = current->next; 
-            
-            if (prev) {
-                prev->next = temp2;
-                prev->next->next = temp2->next;
-            } 
-            current = current->next;            
         }
         else {
             prev = current;
             current = current->next;
         }
     }
+    ndisplay();
 }
 
 void ssort_list() { 
