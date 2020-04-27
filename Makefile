@@ -17,6 +17,6 @@ list2: list2.o main.c
 list2.o: list2.c 
 
 clean:
-	rm -rf *.o *.gch $(EXECUTABLE) $(EXECUTABLE2)
+	rm -rf *.o *.gch $(EXECUTABLE) $(EXECUTABLE2) core*
 leaks:
 	valgrind --leak-check=yes ./$(EXECUTABLE)

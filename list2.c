@@ -193,13 +193,13 @@ int comparefunc (const void *a, const void *b) {
  */
 void snsort_list() { 
     Node *current = lhead;
-    Node *prev = 0;
+    Node *prev = 0; // previous node to current
     // iterate through the list 
     while (current && current->next) {
         Node *mnode = current;
         // find the minimum in the rest of the list
         Node *rest = current->next;
-        Node *mprev = 0;
+        Node *mprev = 0; // previous node to minimum
         Node *restp = current;
         while (rest) {
             if (rest->data < mnode->data) {
@@ -209,31 +209,47 @@ void snsort_list() {
             restp = rest;
             rest = rest->next;        
         }
-        // swap only if necessary
+        // swap nodes only if necessary
         if (mnode != current) {
             Node *temp;
-            // if nodes are adjacent to each other
+            // If nodes are adjacent to each other,
+            // insert mnode before current
+            // The desired sequence:
+            //   prev->mnode->current->mnode->next
             if (mprev == current) {
                 temp = mnode->next; 
                 mnode->next = current;
                 current->next = temp;
                 // previous now points to mnode
-                prev->next = mnode;
+                if (prev) {
+                    prev->next = mnode;
+                    current = current->next;
+                } else { 
+                    // swapping at the lhead 
+                    puts("\nSorting at the head: Not yet implemented!");
+                    exit(1);
+                }
             } else {
-                // first swap
+                // Swap the forward links
                 temp = mnode->next; 
                 mnode->next = current->next;
                 current->next = temp;
-                // second swap 
-                temp = mprev->next; 
-                mprev->next = prev->next; 
-                prev->next = temp;
+                // Swap the forward links of previous nodes 
+                if (prev) {
+                    temp = mprev->next; 
+                    mprev->next = prev->next; 
+                    prev->next = temp;
 
-                /*printf("\nc-%d cn-%d m-%d mn-%d\n", 
-                        current->data, current->next->data,
-                        mnode->data, mnode->next->data);
-                        */
-                current = mnode;
+                    /*printf("\nc-%d cn-%d m-%d mn-%d\n", 
+                            current->data, current->next->data,
+                            mnode->data, mnode->next->data);
+                    */
+                    current = mnode;
+                } else {
+                    // swapping at the lhead 
+                    puts("\nSorting at the head: Not yet implemented!");
+                    exit(1);   
+                }
             }
         }
         else {
@@ -269,8 +285,8 @@ void ssort_list() {
     }
 }
 
-/* Selection sort of the linked list 
- * based on the node values
+/* Sorting of the linked list 
+ * using qsort
  */
 void sort_list() { 
     Node *current = lhead;
