@@ -12,10 +12,10 @@ Node *ltail;
 
 void create();
 void ndisplay();
-void sort_list();     // sorting using qsort
-void ssort_list();    // sorting using selection sort of values
-void snsort_list();   // sorting using selection sort of nodes
-void sort_list_rec(); // sorting using recursive selection sort
+void sort_list();      // sorting using qsort
+void ssort_list();     // sorting using selection sort of values
+void node_sort_list(); // sorting using selection sort of nodes
+void sort_list_rec();  // sorting using recursive selection sort
 
 int is_valid(Node *n) { return n != NULL; }
 
@@ -150,7 +150,7 @@ int main() {
       get_index();
       break;
     case 5:
-      snsort_list();
+      node_sort_list();
       // ssort_list();
       // sort_list();
       break;
@@ -190,14 +190,12 @@ void ndisplay() {
 /* Selection sort of the nodes
  * in the linked list, recursively
  */
-void sort_list_rec() {
-    puts("Not yet implemented");
-}
+void sort_list_rec() { puts("Not yet implemented"); }
 
 /* Selection sort of the nodes
  * in the linked list
  */
-void snsort_list() {
+void node_sort_list() {
   Node *current = lhead;
   Node *prev = 0; // previous node to current
   // iterate through the list
@@ -232,7 +230,7 @@ void snsort_list() {
         if (!prev)
           // swapping at the lhead
           lhead = mnode;
-        else 
+        else
           prev->next = mnode;
 
       } else {
@@ -254,9 +252,9 @@ void snsort_list() {
       // rejig current to mnode->next
       prev = mnode;
       current = mnode->next;
-       // if(prev && mprev && mnode && current)
-       //   printf("\nprev %d mprev %d mnode %d current %d\n",
-       //     prev->data, mprev->data, mnode->data, current->data);
+      // if(prev && mprev && mnode && current)
+      //   printf("\nprev %d mprev %d mnode %d current %d\n",
+      //     prev->data, mprev->data, mnode->data, current->data);
     } else {
       prev = current;
       current = current->next;
