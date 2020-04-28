@@ -153,6 +153,7 @@ int main() {
       //sort_list(); 
       break;
     case 6:
+      puts("\nExiting program...!");
       break;
     }
   } while (choice != 6);
@@ -217,8 +218,8 @@ void snsort_list() {
             // The desired sequence:
             //   prev >> mnode  >> current >>  mnode->next
             if (mprev == current) {
-                printf("prev %d mprev %d mnode %d current %d\n", 
-                    prev->data, mprev->data, mnode->data, current->data);
+                //printf("prev %d mprev %d mnode %d current %d\n", 
+                //    prev->data, mprev->data, mnode->data, current->data);
                 temp = mnode->next; 
                 mnode->next = current;
                 current->next = temp;
@@ -242,11 +243,12 @@ void snsort_list() {
                     lhead = mnode; 
                 }
             }
-            // rejig current to mnode
-            current = mnode;
-            if(prev && mprev && mnode && current)
-                printf("\nprev %d mprev %d mnode %d current %d\n", 
-                    prev->data, mprev->data, mnode->data, current->data);
+            // rejig current to mnode->next
+            prev = mnode; 
+            current = mnode->next;
+            //if(prev && mprev && mnode && current)
+            //    printf("\nprev %d mprev %d mnode %d current %d\n", 
+            //        prev->data, mprev->data, mnode->data, current->data);
         }
         else {
             prev = current;
