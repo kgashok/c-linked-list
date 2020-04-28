@@ -215,20 +215,17 @@ void snsort_list() {
             // If nodes are adjacent to each other,
             // insert mnode before current
             // The desired sequence:
-            //   prev->mnode->current->mnode->next
+            //   prev >> mnode  >> current >>  mnode->next
             if (mprev == current) {
+                printf("prev %d mprev %d mnode %d current %d\n", 
+                    prev->data, mprev->data, mnode->data, current->data);
                 temp = mnode->next; 
                 mnode->next = current;
                 current->next = temp;
-                // previous now points to mnode
-                if (prev) {
-                    prev->next = mnode;
-                    current = current->next;
-                } else { 
+                prev->next = mnode;
+                if (!prev) 
                     // swapping at the lhead 
-                    puts("\nSorting at the head: Not yet implemented!");
-                    exit(1);
-                }
+                    lhead = mnode; 
             } else {
                 // Swap the forward links
                 temp = mnode->next; 
@@ -239,25 +236,24 @@ void snsort_list() {
                     temp = mprev->next; 
                     mprev->next = prev->next; 
                     prev->next = temp;
-
-                    /*printf("\nc-%d cn-%d m-%d mn-%d\n", 
-                            current->data, current->next->data,
-                            mnode->data, mnode->next->data);
-                    */
-                    current = mnode;
                 } else {
-                    // swapping at the lhead 
-                    puts("\nSorting at the head: Not yet implemented!");
-                    exit(1);   
+                    // swapping at the lhead
+                    mprev->next = lhead; 
+                    lhead = mnode; 
                 }
             }
+            // rejig current to mnode
+            current = mnode;
+            if(prev && mprev && mnode && current)
+                printf("\nprev %d mprev %d mnode %d current %d\n", 
+                    prev->data, mprev->data, mnode->data, current->data);
         }
         else {
             prev = current;
             current = current->next;
         }
+        ndisplay();
     }
-    ndisplay();
 }
 
 /* Selection sort of the linked list 
