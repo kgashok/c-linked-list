@@ -12,9 +12,10 @@ Node *ltail;
 
 void create();
 void ndisplay();
-void sort_list();   // sorting using qsort
-void ssort_list();  // sorting using selection sort of values
-void snsort_list(); // sorting using selection sort of nodes
+void sort_list();     // sorting using qsort
+void ssort_list();    // sorting using selection sort of values
+void snsort_list();   // sorting using selection sort of nodes
+void sort_list_rec(); // sorting using recursive selection sort
 
 int is_valid(Node *n) { return n != NULL; }
 
@@ -132,7 +133,8 @@ int main() {
          "\n3. Display"
          "\n4. Search"
          "\n5. Sort"
-         "\n6. Exit");
+         "\n6. Exit"
+         "\n7. Recursive sort");
   do {
     printf("\n Enter your choice: ");
     scanf("%d", &choice);
@@ -155,6 +157,8 @@ int main() {
     case 6:
       puts("\nExiting program...!");
       break;
+    case 7:
+      sort_list_rec();
     }
   } while (choice != 6);
   return 0;
@@ -181,6 +185,13 @@ void ndisplay() {
       printf(", ");
   }
   printf("]");
+}
+
+/* Selection sort of the nodes
+ * in the linked list, recursively
+ */
+void sort_list_rec() {
+    puts("Not yet implemented");
 }
 
 /* Selection sort of the nodes
