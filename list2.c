@@ -187,37 +187,11 @@ void ndisplay() {
   printf("]");
 }
 
-void sort_list_helper(Node *head) {
-    Node *current = head; 
-    // TERMINAL CASE - are we at the tail node?
-    if (current && current->next == 0)
-        return;
-
-    Node *mnode = current;
-    // Find the minimum in the rest of sublist
-    Node *rest = current->next;
-    while (rest) { 
-        if (rest->data < mnode->data) 
-            mnode = rest; 
-        rest = rest->next;
-    }
-    // swap if necessary
-    if (mnode != current) { 
-        int temp = current->data;
-        current->data = mnode->data; 
-        mnode->data = temp;
-        ndisplay();
-    }
-    // Recursive call 
-    sort_list_helper(current->next);
-
-}
 /* Selection sort of the nodes
  * in the linked list, recursively
  */
 void sort_list_rec() {
-    sort_list_helper(lhead);
-    ndisplay();
+    puts("Not yet implemented");
 }
 
 /* Selection sort of the nodes
