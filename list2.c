@@ -183,6 +183,16 @@ void ndisplay() {
   printf("]");
 }
 
+<<<<<<< HEAD
+=======
+int comparefunc(const void *a, const void *b) {
+  const Node *na = *(Node **)a;
+  const Node *nb = *(Node **)b;
+  return na->data - nb->data;
+  // return -1;
+}
+
+>>>>>>> 890597319e7e2f53fd422382fc50345d93c7ed49
 /* Selection sort of the nodes
  * in the linked list
  */
