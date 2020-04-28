@@ -12,24 +12,24 @@ Node *ltail;
 
 void create();
 void ndisplay();
-void sort_list();    // sorting using qsort 
-void ssort_list();   // sorting using selection sort of values
-void snsort_list();  // sorting using selection sort of nodes
+void sort_list();   // sorting using qsort
+void ssort_list();  // sorting using selection sort of values
+void snsort_list(); // sorting using selection sort of nodes
 
 int is_valid(Node *n) { return n != NULL; }
 
-/* Traverses a list and returns a node 'steps' away 
+/* Traverses a list and returns a node 'steps' away
  * or returns NULL if 'steps' is not valid
  * Arguments: Starting node pointer and number of steps
  */
 Node *traverse(Node *np, int steps) {
   while (is_valid(np) && steps > 0)
-    np = np->next, steps--; 
-  
+    np = np->next, steps--;
+
   return steps == 0 ? np : NULL;
 }
 
-/* Connects up two valid nodes 
+/* Connects up two valid nodes
  * Arguments: Two nodes, the 2nd node follows the 1st node
  */
 void connect(Node *current, Node *following) {
@@ -37,7 +37,7 @@ void connect(Node *current, Node *following) {
     current->next = following;
 }
 
-/* Gets an integer value from stdin 
+/* Gets an integer value from stdin
  * Arguments: None
  */
 int get_value() {
@@ -48,7 +48,7 @@ int get_value() {
   return val;
 }
 
-/* Gets an integer value from stdin 
+/* Gets an integer value from stdin
  * and returns that value as index (value-1)
  * Arguments: None
  */
@@ -80,7 +80,7 @@ void insert_after(Node *locatedNode, int val) {
   connect(newN, next);
 }
 
-/* DO NOT MODIFY the function below 
+/* DO NOT MODIFY the function below
  *
  */
 void insert() {
@@ -93,19 +93,19 @@ void insert() {
   printf("\n No such position");
 }
 
-/* Gets an integer value from stdin 
- * and return the location (index) of that 
- * value in the linked list 
+/* Gets an integer value from stdin
+ * and return the location (index) of that
+ * value in the linked list
  * Arguments: None
  */
-void get_index() { 
+void get_index() {
   int val;
   printf("\nEnter value to search for? ");
   scanf("%d", &val);
   int index = 0;
   int flag = 0;
-  const Node* current = lhead;
-  while (current) { 
+  const Node *current = lhead;
+  while (current) {
     if (current->data == val) {
       flag = 1;
       break;
@@ -114,7 +114,7 @@ void get_index() {
     current = current->next;
   }
   if (!flag)
-    printf("Data %d: Not in the list!", val); 
+    printf("Data %d: Not in the list!", val);
   else {
     printf("Data %d: Found at index %d", val, index);
   }
@@ -147,10 +147,10 @@ int main() {
     case 4:
       get_index();
       break;
-    case 5: 
+    case 5:
       snsort_list();
-      //ssort_list(); 
-      //sort_list(); 
+      // ssort_list();
+      // sort_list();
       break;
     case 6:
       puts("\nExiting program...!");
@@ -177,139 +177,138 @@ void ndisplay() {
   printf("\n  The list contains : [");
   for (; is_valid(iter); iter = iter->next) {
     printf("%d", iter->data);
-    if (iter->next) printf(", ");
+    if (iter->next)
+      printf(", ");
   }
   printf("]");
 }
 
-int comparefunc (const void *a, const void *b) { 
-    const Node *na = *(Node **)a;
-    const Node *nb = *(Node **)b;
-    return na->data - nb->data;
-    //return -1;
-}
-
-/* Selection sort of the nodes 
- * in the linked list 
+/* Selection sort of the nodes
+ * in the linked list
  */
-void snsort_list() { 
-    Node *current = lhead;
-    Node *prev = 0; // previous node to current
-    // iterate through the list 
-    while (current && current->next) {
-        Node *mnode = current;
-        // find the minimum in the rest of the list
-        Node *rest = current->next;
-        Node *mprev = 0; // previous node to minimum
-        Node *restp = current;
-        while (rest) {
-            if (rest->data < mnode->data) {
-                mnode = rest;
-                mprev = restp;
-            }
-            restp = rest;
-            rest = rest->next;        
-        }
-        // swap nodes only if necessary
-        if (mnode != current) {
-            Node *temp;
-            // If nodes are adjacent to each other,
-            // insert mnode before current
-            // The desired sequence:
-            //   prev >> mnode  >> current >>  mnode->next
-            if (mprev == current) {
-                //printf("prev %d mprev %d mnode %d current %d\n", 
-                //    prev->data, mprev->data, mnode->data, current->data);
-                temp = mnode->next; 
-                mnode->next = current;
-                current->next = temp;
-                prev->next = mnode;
-                if (!prev) 
-                    // swapping at the lhead 
-                    lhead = mnode; 
-            } else {
-                // Swap the forward links
-                temp = mnode->next; 
-                mnode->next = current->next;
-                current->next = temp;
-                // Swap the forward links of previous nodes 
-                if (prev) {
-                    temp = mprev->next; 
-                    mprev->next = prev->next; 
-                    prev->next = temp;
-                } else {
-                    // swapping at the lhead
-                    mprev->next = lhead; 
-                    lhead = mnode; 
-                }
-            }
-            // rejig current to mnode->next
-            prev = mnode; 
-            current = mnode->next;
-            //if(prev && mprev && mnode && current)
-            //    printf("\nprev %d mprev %d mnode %d current %d\n", 
-            //        prev->data, mprev->data, mnode->data, current->data);
-        }
-        else {
-            prev = current;
-            current = current->next;
-        }
-        ndisplay();
+void snsort_list() {
+  Node *current = lhead;
+  Node *prev = 0; // previous node to current
+  // iterate through the list
+  while (current && current->next) {
+    Node *mnode = current;
+    // find the minimum in the rest of the list
+    Node *rest = current->next;
+    Node *mprev = 0; // previous node to minimum
+    Node *restp = current;
+    while (rest) {
+      if (rest->data < mnode->data) {
+        mnode = rest;
+        mprev = restp;
+      }
+      restp = rest;
+      rest = rest->next;
     }
+    // swap nodes only if necessary
+    if (mnode != current) {
+      Node *temp;
+      // If nodes are adjacent to each other,
+      // insert mnode before current
+      // The desired sequence:
+      //   prev >> mnode  >> current >>  mnode->next
+      if (mprev == current) {
+        // printf("prev %d mprev %d mnode %d current %d\n",
+        //    prev->data, mprev->data, mnode->data, current->data);
+        temp = mnode->next;
+        mnode->next = current;
+        current->next = temp;
+        prev->next = mnode;
+        if (!prev)
+          // swapping at the lhead
+          lhead = mnode;
+      } else {
+        // Swap the forward links
+        temp = mnode->next;
+        mnode->next = current->next;
+        current->next = temp;
+        // Swap the forward links of previous nodes
+        if (prev) {
+          temp = mprev->next;
+          mprev->next = prev->next;
+          prev->next = temp;
+        } else {
+          // swapping at the lhead
+          mprev->next = lhead;
+          lhead = mnode;
+        }
+      }
+      // rejig current to mnode->next
+      prev = mnode;
+      current = mnode->next;
+      // if(prev && mprev && mnode && current)
+      //    printf("\nprev %d mprev %d mnode %d current %d\n",
+      //        prev->data, mprev->data, mnode->data, current->data);
+    } else {
+      prev = current;
+      current = current->next;
+    }
+    ndisplay();
+  }
 }
 
-/* Selection sort of the linked list 
+/* Selection sort of the linked list
  * based on the node values
  */
-void ssort_list() { 
-    Node *current = lhead;
-    // iterate through the list 
-    while (current && current->next) {
-        Node *mnode = current;
-        // find the minimum in the rest of the list
-        Node *rest = current->next;
-        while (rest) {
-            if (rest->data < mnode->data) 
-                mnode = rest;
-            rest = rest->next;        
-        }
-        // swap only if necessary
-        if (mnode != current) {
-            int temp = mnode->data;
-            mnode->data = current->data; 
-            current->data = temp;
-        }
-        current = current->next;
+void ssort_list() {
+  Node *current = lhead;
+  // iterate through the list
+  while (current && current->next) {
+    Node *mnode = current;
+    // find the minimum in the rest of the list
+    Node *rest = current->next;
+    while (rest) {
+      if (rest->data < mnode->data)
+        mnode = rest;
+      rest = rest->next;
     }
+    // swap only if necessary
+    if (mnode != current) {
+      int temp = mnode->data;
+      mnode->data = current->data;
+      current->data = temp;
+    }
+    current = current->next;
+  }
 }
 
-/* Sorting of the linked list 
+int comparefunc(const void *a, const void *b) {
+  const Node *na = *(Node **)a;
+  const Node *nb = *(Node **)b;
+  return na->data - nb->data;
+}
+
+/* Sorting of the linked list
  * using qsort
  */
-void sort_list() { 
+void sort_list() {
+  Node *current = lhead;
+  Node *narr[100];
+  int count = 0;
+  while (current) {
+    narr[count] = current;
+    current = current->next;
+    count++;
+  }
+  if (count > 0) {
+    qsort(&narr, count, sizeof(Node *), comparefunc);
+    lhead = narr[0];
     Node *current = lhead;
-    Node *narr[100];
-    int count = 0; 
-    while (current) { 
-        narr[count] = current;
-        current = current->next;
-        count++;
+    Node *prev = 0;
+    int i = 0;
+    while (count--) {
+      current->next = narr[i + 1];
+      prev = current;
+      current = current->next;
+      i++;
     }
-    if (count > 0) {
-        qsort(&narr, count, sizeof(Node *), comparefunc);
-        lhead = narr[0];
-        Node *current = lhead;
-        Node *prev = 0;
-        int i = 0;
-        while (count--) {
-            current->next = narr[i+1];
-            prev = current;
-            current = current->next;
-            i++;
-        }
-        prev->next = 0;
-        ltail = prev;
-    }
-    printf("List sorted: ");
-    ndisplay();
+    prev->next = 0;
+    ltail = prev;
+  }
+  printf("List sorted: ");
+  ndisplay();
 }
