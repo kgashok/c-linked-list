@@ -249,15 +249,18 @@ void snsort_list() {
       // The desired sequence:
       //   prev >> mnode  >> current >>  mnode->next
       if (mprev == current) {
-         printf("prev %d mprev %d mnode %d current %d\n",
-            prev->data, mprev->data, mnode->data, current->data);
+        // if(prev && mprev && mnode && current)
+        //   printf("prev %d mprev %d mnode %d current %d\n",
+        //     prev->data, mprev->data, mnode->data, current->data);
         temp = mnode->next;
         mnode->next = current;
         current->next = temp;
-        prev->next = mnode;
         if (!prev)
           // swapping at the lhead
           lhead = mnode;
+        else 
+          prev->next = mnode;
+
       } else {
         // Swap the forward links
         temp = mnode->next;
@@ -277,9 +280,9 @@ void snsort_list() {
       // rejig current to mnode->next
       prev = mnode;
       current = mnode->next;
-       if(prev && mprev && mnode && current)
-          printf("\nprev %d mprev %d mnode %d current %d\n",
-              prev->data, mprev->data, mnode->data, current->data);
+       // if(prev && mprev && mnode && current)
+       //   printf("\nprev %d mprev %d mnode %d current %d\n",
+       //     prev->data, mprev->data, mnode->data, current->data);
     } else {
       prev = current;
       current = current->next;
