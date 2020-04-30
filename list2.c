@@ -187,10 +187,76 @@ void ndisplay() {
   printf("]");
 }
 
+void sort_list_helper(Node *head) {
+    Node *current = head; 
+    // TERMINAL CASE - are we at the tail node?
+    if (current && current->next == 0)
+        return;
+
+    Node *mnode = current;
+    // Find the minimum in the rest of sublist
+    Node *rest = current->next;
+    while (rest) { 
+        if (rest->data < mnode->data) 
+            mnode = rest; 
+        rest = rest->next;
+    }
+    // swap if necessary
+    if (mnode != current) { 
+        int temp = current->data;
+        current->data = mnode->data; 
+        mnode->data = temp;
+        ndisplay();
+    }
+    // Recursive call 
+    sort_list_helper(current->next);
+
+}
 /* Selection sort of the nodes
  * in the linked list, recursively
  */
-void sort_list_rec() { puts("Not yet implemented"); }
+void sort_list_rec() {
+    sort_list_helper(lhead);
+    ndisplay();
+}
+
+
+void swap_nodes(Node *prev, Node *current, Node *mprev, Node *mnode) {
+    Node *temp;
+    // If nodes are adjacent to each other,
+    // insert mnode before current
+    // The desired sequence:
+    //   prev >> mnode  >> current >>  mnode->next
+    if (mprev == current) {
+        // if(prev && mprev && mnode && current)
+        //   printf("prev %d mprev %d mnode %d current %d\n",
+        //     prev->data, mprev->data, mnode->data, current->data);
+        temp = mnode->next;
+        mnode->next = current;
+        current->next = temp;
+        if (!prev)
+            // swapping at the lhead
+            lhead = mnode;
+        else 
+            prev->next = mnode;
+
+        } else {
+        // Swap the forward links
+        temp = mnode->next;
+        mnode->next = current->next;
+        current->next = temp;
+        // Swap the forward links of previous nodes
+        if (prev) {
+            temp = mprev->next;
+            mprev->next = prev->next;
+            prev->next = temp;
+        } else {
+            // swapping at the lhead
+            mprev->next = lhead;
+            lhead = mnode;
+        }
+    }
+}
 
 /* Selection sort of the nodes
  * in the linked list
@@ -215,43 +281,10 @@ void node_sort_list() {
     }
     // swap nodes only if necessary
     if (mnode != current) {
-      Node *temp;
-      // If nodes are adjacent to each other,
-      // insert mnode before current
-      // The desired sequence:
-      //   prev >> mnode  >> current >>  mnode->next
-      if (mprev == current) {
-        // if(prev && mprev && mnode && current)
-        //   printf("prev %d mprev %d mnode %d current %d\n",
-        //     prev->data, mprev->data, mnode->data, current->data);
-        temp = mnode->next;
-        mnode->next = current;
-        current->next = temp;
-        if (!prev)
-          // swapping at the lhead
-          lhead = mnode;
-        else
-          prev->next = mnode;
-
-      } else {
-        // Swap the forward links
-        temp = mnode->next;
-        mnode->next = current->next;
-        current->next = temp;
-        // Swap the forward links of previous nodes
-        if (prev) {
-          temp = mprev->next;
-          mprev->next = prev->next;
-          prev->next = temp;
-        } else {
-          // swapping at the lhead
-          mprev->next = lhead;
-          lhead = mnode;
-        }
-      }
-      // rejig current to mnode->next
+      swap_nodes(prev, current, mprev, mnode);
+      // make current point to mnode->next
       prev = mnode;
-      current = mnode->next;
+      current = prev->next;
       // if(prev && mprev && mnode && current)
       //   printf("\nprev %d mprev %d mnode %d current %d\n",
       //     prev->data, mprev->data, mnode->data, current->data);
