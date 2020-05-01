@@ -220,44 +220,6 @@ void sort_list_rec() {
     ndisplay();
 }
 
-
-void swap_nodes(Node *prev, Node *current, Node *mprev, Node *mnode) {
-    Node *temp;
-    // If nodes are adjacent to each other,
-    // insert mnode before current
-    // The desired sequence:
-    //   prev >> mnode  >> current >>  mnode->next
-    if (mprev == current) {
-        // if(prev && mprev && mnode && current)
-        //   printf("prev %d mprev %d mnode %d current %d\n",
-        //     prev->data, mprev->data, mnode->data, current->data);
-        temp = mnode->next;
-        mnode->next = current;
-        current->next = temp;
-        if (!prev)
-            // swapping at the lhead
-            lhead = mnode;
-        else 
-            prev->next = mnode;
-
-        } else {
-        // Swap the forward links
-        temp = mnode->next;
-        mnode->next = current->next;
-        current->next = temp;
-        // Swap the forward links of previous nodes
-        if (prev) {
-            temp = mprev->next;
-            mprev->next = prev->next;
-            prev->next = temp;
-        } else {
-            // swapping at the lhead
-            mprev->next = lhead;
-            lhead = mnode;
-        }
-    }
-}
-
 /* Selection sort of the nodes
  * in the linked list
  */
@@ -281,13 +243,25 @@ void node_sort_list() {
     }
     // swap nodes only if necessary
     if (mnode != current) {
-      swap_nodes(prev, current, mprev, mnode);
-      // make current point to mnode->next
-      prev = mnode;
-      current = prev->next;
-      // if(prev && mprev && mnode && current)
-      //   printf("\nprev %d mprev %d mnode %d current %d\n",
-      //     prev->data, mprev->data, mnode->data, current->data);
+
+      // update the previous pointers 
+      if (prev)
+        prev->next = mnode;
+      else 
+        lhead = mnode;
+      mprev->next = current;
+
+      // swap the forward links
+      Node *temp = mnode->next; 
+      mnode->next = current->next; 
+      current->next = temp; 
+
+      // rejig current to mnode
+      if (prev) 
+        current = prev->next;
+      else
+        current = lhead;
+      
     } else {
       prev = current;
       current = current->next;
