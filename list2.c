@@ -257,8 +257,10 @@ void node_sort_list() {
       current->next = temp; 
 
       // rejig current to mnode
-      if (prev) 
+      if (prev) {
+        prev = mnode;
         current = prev->next;
+      }
       else
         current = lhead;
       
