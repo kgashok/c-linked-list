@@ -243,14 +243,13 @@ void node_sort_list() {
     }
     // swap nodes only if necessary
     if (mnode != current) {
-
       // update the previous pointers 
-      if (prev)
+      if (prev) 
         prev->next = mnode;
       else 
         lhead = mnode;
       mprev->next = current;
-
+      
       // swap the forward links
       Node *temp = mnode->next; 
       mnode->next = current->next; 
@@ -261,9 +260,10 @@ void node_sort_list() {
         prev = mnode;
         current = prev->next;
       }
-      else
-        current = lhead;
-      
+      else {    
+        prev = lhead;
+        current = lhead->next;
+      }      
     } else {
       prev = current;
       current = current->next;
