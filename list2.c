@@ -259,11 +259,10 @@ void node_sort_list() {
       if (prev) {
         prev = mnode;
         current = prev->next;
-      }
-      else {    
+      } else {
         prev = lhead;
         current = lhead->next;
-      }      
+      }
     } else {
       prev = current;
       current = current->next;
