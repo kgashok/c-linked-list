@@ -226,44 +226,36 @@ void sort_list_rec() {
 void node_sort_list() {
   Node *current = lhead;
   Node *prev = 0; // previous node to current
-  // iterate through the list
+  // Step 0 - iterate through the list until tail
   while (current && current->next) {
     Node *mnode = current;
-    // find the minimum in the rest of the list
+    // Step 1 - find the minimum in the rest of the list
     Node *rest = current->next;
     Node *mprev = 0; // previous node to minimum
     Node *restp = current;
     while (rest) {
-      if (rest->data < mnode->data) {
-        mnode = rest;
-        mprev = restp;
-      }
+      if (rest->data < mnode->data)
+        mnode = rest, mprev = restp;
       restp = rest;
       rest = rest->next;
     }
-    // swap nodes only if necessary
+    // Step 2 - swap nodes only if necessary
     if (mnode != current) {
-
       // swap the nodes using previous pointers
       mprev->next = current;
       if (prev)
         prev->next = mnode; 
       else 
         lhead = mnode;
-      
       // swap the forward links
       Node *temp = mnode->next; 
       mnode->next = current->next; 
       current->next = temp; 
 
-      prev = mnode;
-      current = mnode->next;
-
-    } else {
-      prev = current;
-      current = current->next;
+      current = mnode;
     }
     ndisplay();
+    prev = current, current = current->next;
   }
 }
 
