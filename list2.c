@@ -159,6 +159,7 @@ int main() {
       break;
     case 7:
       sort_list_rec();
+      break;
     }
   } while (choice != 6);
   return 0;
