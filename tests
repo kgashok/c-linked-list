@@ -1,10 +1,10 @@
 make 
-./list2 < data
-./list2 < data2
-./list2 < data3
-./list2 < data4
-./list2 < data5
-./list2 < data6
-./list2 < data7
-./list2 < data8
-./list2 < data9
+./list2 < test/data
+./list2 < test/data2
+./list2 < test/data3
+./list2 < test/data4
+./list2 < test/data5
+./list2 < test/data6
+./list2 < test/data7
+./list2 < test/data8
+./list2 < test/data9
